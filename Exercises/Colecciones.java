@@ -3,13 +3,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 
 
 public class Colecciones {
-    ArrayList<String> cars ;
-    String[] bikes;
-    Set<String> bicicles;
-    HashMap<Integer, String> transport;
+   public ArrayList<String> cars;
+    public String[] bikes;
+    public Set<String> bicicles;
+    public HashMap<Integer, String> transport;
 
     public Colecciones(){
         this.cars = new ArrayList<String>();
@@ -39,9 +40,32 @@ public class Colecciones {
     }
 
     public HashMap<Integer, String>  obtenerHash(){
-        int length = cars.size() + bikes.length + bicicles.size();// obtener tamaño
-        int count =1;
+            LinkedHashSet<String> elementos = new LinkedHashSet<>();
+
+            for (String c : this.cars){
+                agregarSiValido (elementos, c);
+            }
+            for (String b : this.bikes){
+                agregarSiValido (elementos, b);
+            }
+            for (String bi : this.bicicles){
+                agregarSiValido (elementos, bi);
+            }
+
+            this.transport.clear();
+            int count = 1;
+            for (String elemento : elementos) {
+                this.transport.put(count, elemento);
+                count++;
+            }
+
         //this.transport.forEach((key, value) -> System.out.println(key + " " + value)); //imprimir para pruebas
         return this.transport;
+    }
+
+    private void agregarSiValido(Set<String> destino, String valor) {
+        if (valor != null && !valor.isEmpty()) {
+            destino.add(valor);
+        }
     }
 }
